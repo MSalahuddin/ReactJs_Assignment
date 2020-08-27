@@ -13,10 +13,8 @@ function callRequest(data) {
 function* watchRequest() {
   while (true) {
     const { payload } = yield take(types.GET_DATA.REQUEST);
-    console.log(payload,'sagapayload')
     try {
       const response = yield call(callRequest, payload);
-      console.log(response, "saga")
       yield put(success(response));
     } catch (err) {
       yield put(failure(err));

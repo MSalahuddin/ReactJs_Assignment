@@ -22,19 +22,16 @@ class ApiSauce {
   }
 
   handlePromise = (resolve, reject, response) => {
-    console.log(response,'apisuannnn')
+
     if (
-      response.ok &&
       response.data &&
-      response.originalError === null &&
-      response.success
+      response.data.success
     ) {
+      
       resolve(response.data);
     } else {
       if (
-        !response.ok &&
-        response.originalError !== null &&
-        !response.success
+        !response.data.success
       ) {
         reject(response?.data?.msg);
       }

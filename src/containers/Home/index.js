@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import React, { Component } from "react";
-import data from "../../utils/data.json";
+// import data from "../../utils/data.json";
 import { CustomTable, Cards } from "../../components";
 import {request as request_get_data} from "../../redux/actions/GETDATA";
 
@@ -8,6 +8,7 @@ class Home extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            data: null,
             columns: [
                 { Header: 'Date', accessor: 'Date' },
                 { Header: 'Open', accessor: 'Open' },
@@ -25,11 +26,27 @@ class Home extends Component {
     }
 
     UNSAFE_componentWillReceiveProps(nextProps){
-        console.log(nextProps,'nexttttttttttttttt')
+        if (nextProps.getData) {
+            if (
+              !nextProps.getData.failure &&
+              !nextProps.getData.isFetching &&
+              !nextProps.getData.errorMessage &&
+              nextProps.getData.data
+            ) {
+             
+              this.setState({ isloading: false, data: nextProps.getData.data});
+            } else if (
+              nextProps.getData.failure &&
+              !nextProps.getData.isFetching &&
+              nextProps.getData.errorMessage
+            ) {
+              this.setState({ isloading: false });
+            }
+          }
     }
 
     renderCustomTable = () => {
-        const { columns } = this.state;
+        const { columns, data } = this.state;
         return (
             <div className="col-12 px-3 pt-3">
                 <CustomTable columns={columns} data={data.data} />
@@ -38,6 +55,7 @@ class Home extends Component {
     }
 
     renderCards = () => {
+        const {data} = this.state;
         return (
             <div className="col-12 px-3 pt-3">
                 <Cards data={data.data} />
@@ -46,7 +64,7 @@ class Home extends Component {
     }
 
     render() {
-        const { toggleValue } = this.state;
+        const { toggleValue, data } = this.state;
         return (
             <div className="container-fluid bg-light">
                 <div className="container min-vh-100">
@@ -71,7 +89,11 @@ class Home extends Component {
                                 </label>
                             </div>
                         </div>
-                        {toggleValue === 'table' ? this.renderCustomTable() : this.renderCards()}
+                        { toggleValue === 'table' ? 
+                            data && data.data.length > 0 &&
+                            this.renderCustomTable() :
+                           data && data.data.length > 0 &&
+                            this.renderCards()}
                     </div>
                 </div>
 
