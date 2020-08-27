@@ -1,5 +1,5 @@
 import CustomTable from "./CustomTable";
-import Cards from "./Cards";
+import Cards from "./cards";
 
 export {
     CustomTable,

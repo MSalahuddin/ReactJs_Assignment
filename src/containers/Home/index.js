@@ -1,9 +1,10 @@
-
+import { connect } from "react-redux";
 import React, { Component } from "react";
 import data from "../../utils/data.json";
 import { CustomTable, Cards } from "../../components";
+import {request as request_get_data} from "../../redux/actions/GETDATA";
 
-export default class Home extends Component {
+class Home extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -17,6 +18,14 @@ export default class Home extends Component {
             ],
             toggleValue: 'table'
         }
+    }
+
+    UNSAFE_componentWillMount(){
+        this.props.request_get_data({})
+    }
+
+    UNSAFE_componentWillReceiveProps(nextProps){
+        console.log(nextProps,'nexttttttttttttttt')
     }
 
     renderCustomTable = () => {
@@ -70,3 +79,11 @@ export default class Home extends Component {
         )
     }
 }
+
+const mapStateToProps = (state) => ({getData: state.getData});
+
+const action = {request_get_data};
+
+export default connect(mapStateToProps, action)(Home);
+
+
