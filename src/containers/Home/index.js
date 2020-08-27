@@ -30,7 +30,7 @@ export default class Home extends Component {
 
     renderCards = () => {
         return (
-            <div className="col-12 px-0 pt-3">
+            <div className="col-12 px-3 pt-3">
                 <Cards data={data.data} />
             </div>
         )
