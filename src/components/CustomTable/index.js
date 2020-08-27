@@ -1,49 +1,19 @@
-import styled from 'styled-components';
+import React from 'react';
 import { useTable } from 'react-table';
 
-const Styles = styled.div`
-
-  table {
-    
-    th,
-    td {
-      margin: 0;
-      padding: 0.5rem;
-      border-bottom: 1px solid black;
-      border-right: 1px solid black;
-
-      :last-child {
-        border-right: 0;
-      }
-    }
-  }
-`
-
-export const CustomTable = ({ columns, data }) => {
+const CustomTable = ({ columns, data }) => {
     const {
         getTableProps,
         getTableBodyProps,
         headerGroups,
         rows,
         prepareRow,
-    } = useTable({
-        columns,
-        data,
-    })
+    } = useTable({ columns, data })
 
     return (
         <div>
-              <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                <label class="btn btn-secondary active">
-                    <input type="radio" name="options" id="option1" autocomplete="off" checked/> Table 
-                </label>
-                <label class="btn btn-secondary">
-                    <input type="radio" name="options" id="option2" autocomplete="off"/> Cards
-                </label>
-             </div>
-            <table className="table table-bordered" {...getTableProps()}>
-          
-                <thead className = "thead-dark">
+            <table className="table" {...getTableProps()}>
+                <thead>
                     {headerGroups.map(headerGroup => (
                         <tr {...headerGroup.getHeaderGroupProps()}>
                             {headerGroup.headers.map(column => (
@@ -65,6 +35,8 @@ export const CustomTable = ({ columns, data }) => {
                     })}
                 </tbody>
             </table>
-        </div>
+        </div >
     )
 }
+
+export default CustomTable

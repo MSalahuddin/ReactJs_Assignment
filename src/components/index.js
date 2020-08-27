@@ -1,7 +1,7 @@
-import {CustomTable} from "./table";
-import {renderCards} from "./cards";
+import CustomTable from "./CustomTable";
+import Cards from "./Cards";
 
-export  {
+export {
     CustomTable,
-    renderCards
+    Cards
 }
