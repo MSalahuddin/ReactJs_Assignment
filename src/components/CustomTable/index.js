@@ -11,7 +11,7 @@ const CustomTable = ({ columns, data }) => {
     } = useTable({ columns, data })
 
     return (
-        <div>
+        <div className="table-responsive">
             <table className="table" {...getTableProps()}>
                 <thead>
                     {headerGroups.map(headerGroup => (
