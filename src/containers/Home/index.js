@@ -1,7 +1,8 @@
 import { connect } from "react-redux";
 import React, { Component } from "react";
+import io from 'socket.io-client';
 // import data from "../../utils/data.json";
-import { CustomTable, Cards } from "../../components";
+import { CustomTable, Cards, Chart } from "../../components";
 import {request as request_get_data} from "../../redux/actions/GETDATA";
 
 class Home extends Component {
@@ -22,7 +23,11 @@ class Home extends Component {
     }
 
     UNSAFE_componentWillMount(){
-        this.props.request_get_data({})
+        this.props.request_get_data({});
+        this.socket = io('http://localhost:3000');
+        this.socket.on('visualizeData', data => {
+            this.setState({ChartData: data})
+        });
     }
 
     UNSAFE_componentWillReceiveProps(nextProps){
@@ -63,6 +68,15 @@ class Home extends Component {
         )
     }
 
+    renderChart = () => {
+        const {ChartData} = this.state;
+        return (
+            <div className="col-12 px-3 pt-3">
+                <Chart ChartData = {ChartData}/>
+            </div>
+        )
+    }
+
     render() {
         const { toggleValue, data } = this.state;
         return (
@@ -87,13 +101,23 @@ class Home extends Component {
                                     <input type="radio" name="options" id="option2" value="cards" checked={toggleValue === 'cards'} />
                                     {'Cards'}
                                 </label>
+                                <label className={
+                                    toggleValue === 'chart' ?
+                                        'btn btn-secondary active' :
+                                        'btn btn-secondary'
+                                }>
+                                    <input type="radio" name="options" id="option3" value="chart" checked={toggleValue === 'chart'} />
+                                    {'Chart'}
+                                </label>
                             </div>
                         </div>
                         { toggleValue === 'table' ? 
                             data && data.data.length > 0 &&
-                            this.renderCustomTable() :
+                            this.renderCustomTable() : 
+                            toggleValue === 'cards' ? 
                            data && data.data.length > 0 &&
-                            this.renderCards()}
+                            this.renderCards()
+                        : this.renderChart()}
                     </div>
                 </div>
 
