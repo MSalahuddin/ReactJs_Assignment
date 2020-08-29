@@ -2,35 +2,37 @@ import React from 'react';
 import { ResponsiveLine } from '@nivo/line'
 
 const Chart = ({ ChartData }) => {
-    console.log(ChartData,'///////////////////')
     if(ChartData){
+        // ChartData = ChartData.slice(Math.max(ChartData.length - 5, 0)) 
         let data = [
             {
               "id": "Open",
               "color": "hsl(71, 70%, 50%)",
-              "data": ChartData.Open
+              "data": ChartData.Open.slice((ChartData.Open.length - 5), ChartData.Open.length)
             },
             {
                 "id": "High",
                 "color": "hsl(71, 70%, 50%)",
-                "data": ChartData.High
+                "data": ChartData.High.slice((ChartData.High.length - 5), ChartData.High.length)
             },
             {
                 "id": "Low",
                 "color": "hsl(71, 70%, 50%)",
-                "data": ChartData.Low
+                "data": ChartData.Low.slice((ChartData.Low.length - 5), ChartData.Low.length)
             },
             {
                 "id": "Close",
                 "color": "hsl(71, 70%, 50%)",
-                "data": ChartData.Close
+                "data": ChartData.Close.slice((ChartData.Close.length - 5), ChartData.Close.length)
             },
             {
                 "id": "Volume",
                 "color": "hsl(71, 70%, 50%)",
-                "data": ChartData.Volume
+                "data": ChartData.Volume.slice((ChartData.Volume.length - 5), ChartData.Volume.length)
             },
-        ]
+        ];
+        console.log(data,'dddddddddddddd')
+       
         return (
             <div className="col-12 px-0" style={{ height: 300 }}>
                         <ResponsiveLine
