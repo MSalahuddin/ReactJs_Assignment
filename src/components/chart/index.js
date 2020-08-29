@@ -8,30 +8,30 @@ const Chart = ({ ChartData }) => {
             {
               "id": "Open",
               "color": "hsl(71, 70%, 50%)",
-              "data": ChartData.Open.slice((ChartData.Open.length - 5), ChartData.Open.length)
+              "data": ChartData.Open.slice((ChartData.Open.length - 7), ChartData.Open.length)
             },
             {
                 "id": "High",
                 "color": "hsl(71, 70%, 50%)",
-                "data": ChartData.High.slice((ChartData.High.length - 5), ChartData.High.length)
+                "data": ChartData.High.slice((ChartData.High.length - 7), ChartData.High.length)
             },
             {
                 "id": "Low",
                 "color": "hsl(71, 70%, 50%)",
-                "data": ChartData.Low.slice((ChartData.Low.length - 5), ChartData.Low.length)
+                "data": ChartData.Low.slice((ChartData.Low.length - 7), ChartData.Low.length)
             },
             {
                 "id": "Close",
                 "color": "hsl(71, 70%, 50%)",
-                "data": ChartData.Close.slice((ChartData.Close.length - 5), ChartData.Close.length)
+                "data": ChartData.Close.slice((ChartData.Close.length - 7), ChartData.Close.length)
             },
             {
                 "id": "Volume",
                 "color": "hsl(71, 70%, 50%)",
-                "data": ChartData.Volume.slice((ChartData.Volume.length - 5), ChartData.Volume.length)
+                "data": ChartData.Volume.slice((ChartData.Volume.length - 7), ChartData.Volume.length)
             },
         ];
-        console.log(data,'dddddddddddddd')
+        
        
         return (
             <div className="col-12 px-0" style={{ height: 300 }}>
