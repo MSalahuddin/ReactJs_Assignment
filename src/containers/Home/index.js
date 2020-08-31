@@ -38,7 +38,6 @@ class Home extends Component {
               !nextProps.getData.errorMessage &&
               nextProps.getData.data
             ) {
-             
               this.setState({ isloading: false, data: nextProps.getData.data});
             } else if (
               nextProps.getData.failure &&

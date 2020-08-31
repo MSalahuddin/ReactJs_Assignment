@@ -8,30 +8,30 @@ const Chart = ({ ChartData }) => {
             {
               "id": "Open",
               "color": "hsl(71, 70%, 50%)",
-              "data": ChartData.Open.slice((ChartData.Open.length - 7), ChartData.Open.length)
+              "data": ChartData.Open
             },
             {
                 "id": "High",
-                "color": "hsl(71, 70%, 50%)",
-                "data": ChartData.High.slice((ChartData.High.length - 7), ChartData.High.length)
+                "color": "hsl(46, 70%, 50%)",
+                "data": ChartData.High
             },
             {
                 "id": "Low",
-                "color": "hsl(71, 70%, 50%)",
-                "data": ChartData.Low.slice((ChartData.Low.length - 7), ChartData.Low.length)
+                "color": "hsl(34, 70%, 50%)",
+                "data": ChartData.Low
             },
             {
                 "id": "Close",
-                "color": "hsl(71, 70%, 50%)",
-                "data": ChartData.Close.slice((ChartData.Close.length - 7), ChartData.Close.length)
+                "color": "hsl(263, 70%, 50%)",
+                "data": ChartData.Close
             },
             {
                 "id": "Volume",
-                "color": "hsl(71, 70%, 50%)",
-                "data": ChartData.Volume.slice((ChartData.Volume.length - 7), ChartData.Volume.length)
+                "color": "hsl(37, 70%, 50%)",
+                "data": ChartData.Volume
             },
         ];
-        
+        console.log(data,'ddddddddddddddddddd')
        
         return (
             <div className="col-12 px-0" style={{ height: 300 }}>
@@ -48,15 +48,7 @@ const Chart = ({ ChartData }) => {
                             }}
                             axisTop={null}
                             axisRight={null}
-                            axisBottom={{
-                                orient: 'bottom',
-                                tickSize: 5,
-                                tickPadding: 5,
-                                tickRotation: 0,
-                                legend: 'transportation',
-                                legendOffset: 36,
-                                legendPosition: 'middle'
-                            }}
+                            axisBottom = {null}
                             axisLeft={{
                                     orient: 'left',
                                     tickSize: 0,
