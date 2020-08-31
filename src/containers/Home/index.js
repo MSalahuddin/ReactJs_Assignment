@@ -3,7 +3,8 @@ import React, { Component } from "react";
 import io from 'socket.io-client';
 // import data from "../../utils/data.json";
 import { CustomTable, Cards, Chart } from "../../components";
-import {request as request_get_data} from "../../redux/actions/GETDATA";
+import utils from "../../utils";
+import { request as request_get_data } from "../../redux/actions/GETDATA";
 
 class Home extends Component {
     constructor(props) {
@@ -18,35 +19,62 @@ class Home extends Component {
                 { Header: 'Close', accessor: 'Close' },
                 { Header: 'Volume', accessor: 'Volume' },
             ],
-            toggleValue: 'table'
+            toggleValue: 'table',
+            chartData: [],
         }
     }
 
-    UNSAFE_componentWillMount(){
+    UNSAFE_componentWillMount() {
         this.props.request_get_data({});
-        this.socket = io('http://localhost:3000');
+        this.socket = io('https://dataassignment.herokuapp.com');
         this.socket.on('visualizeData', data => {
-            this.setState({ChartData: data})
+            let chartData = utils.sortingChart(data)
+            // let objectKeys = Object.keys(data)
+            // let chartData = []
+            // objectKeys.map(val => {
+            //     let chartValues = []
+            //     data[val].map(item => {
+            //         let obj = {
+            //             x: `${moment(item.x).format('MMM')} ${moment(item.x).format('DD')}`,
+            //             y: item.y,
+            //         }
+            //         if (chartValues.length === 15) {
+            //             chartValues.shift()
+            //         } else {
+            //             chartValues.push(obj)
+            //         }
+            //     })
+            //     let singleChart = {
+            //         id: `${val}`,
+            //         color: `hsl(${val === 'Open' ? 266 :
+            //             val === 'High' ? 340 :
+            //                 val === 'Low' ? 297 :
+            //                     val === 'Close' ? 115 : 306} , 70%, 50%)`,
+            //         data: chartValues,
+            //     }
+            //     chartData.push(singleChart)
+            // })
+            this.setState({ chartData: chartData })
         });
     }
 
-    UNSAFE_componentWillReceiveProps(nextProps){
+    UNSAFE_componentWillReceiveProps(nextProps) {
         if (nextProps.getData) {
             if (
-              !nextProps.getData.failure &&
-              !nextProps.getData.isFetching &&
-              !nextProps.getData.errorMessage &&
-              nextProps.getData.data
+                !nextProps.getData.failure &&
+                !nextProps.getData.isFetching &&
+                !nextProps.getData.errorMessage &&
+                nextProps.getData.data
             ) {
-              this.setState({ isloading: false, data: nextProps.getData.data});
+                this.setState({ isloading: false, data: nextProps.getData.data });
             } else if (
-              nextProps.getData.failure &&
-              !nextProps.getData.isFetching &&
-              nextProps.getData.errorMessage
+                nextProps.getData.failure &&
+                !nextProps.getData.isFetching &&
+                nextProps.getData.errorMessage
             ) {
-              this.setState({ isloading: false });
+                this.setState({ isloading: false });
             }
-          }
+        }
     }
 
     renderCustomTable = () => {
@@ -59,7 +87,7 @@ class Home extends Component {
     }
 
     renderCards = () => {
-        const {data} = this.state;
+        const { data } = this.state;
         return (
             <div className="col-12 px-3 pt-3">
                 <Cards data={data.data} />
@@ -68,10 +96,14 @@ class Home extends Component {
     }
 
     renderChart = () => {
-        const {ChartData} = this.state;
+        const { chartData } = this.state;
         return (
             <div className="col-12 px-3 pt-3">
-                <Chart ChartData = {ChartData}/>
+                <div className="col-12 p-3 pt-3 shadow rounded">
+                    <h1 className="h3">Overall Smmary</h1>
+                    {chartData.length > 0 ? (<Chart chartData={chartData} />) : <p>Loading...</p>}
+
+                </div>
             </div>
         )
     }
@@ -110,13 +142,13 @@ class Home extends Component {
                                 </label>
                             </div>
                         </div>
-                        { toggleValue === 'table' ? 
+                        {toggleValue === 'table' ?
                             data && data.data.length > 0 &&
-                            this.renderCustomTable() : 
-                            toggleValue === 'cards' ? 
-                           data && data.data.length > 0 &&
-                            this.renderCards()
-                        : this.renderChart()}
+                            this.renderCustomTable() :
+                            toggleValue === 'cards' ?
+                                data && data.data.length > 0 &&
+                                this.renderCards()
+                                : this.renderChart()}
                     </div>
                 </div>
 
@@ -125,9 +157,9 @@ class Home extends Component {
     }
 }
 
-const mapStateToProps = (state) => ({getData: state.getData});
+const mapStateToProps = (state) => ({ getData: state.getData });
 
-const action = {request_get_data};
+const action = { request_get_data };
 
 export default connect(mapStateToProps, action)(Home);
 
